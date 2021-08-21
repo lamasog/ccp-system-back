@@ -4,8 +4,15 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('alunos', {
 
-      codigo: {
+      id: {
         type: Sequelize.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+      },
+
+      codigo: {
+        type: Sequelize.STRING(6),
         primaryKey: true,
         allowNull: false,
         unique: true
@@ -33,16 +40,22 @@ module.exports = {
       },
 
       cod_orientador: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         references: { model: 'orientadores', key: 'codigo' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        allowNull: false,
+        allowNull: true,
       },
 
       curso: {
         type:Sequelize.STRING,
+        allowNull: true,
+      },
+
+      is_ccp: {
+        type: Sequelize.TINYINT,
         allowNull: false,
+        defaultValue: 0,
       },
 
       created_at: {
