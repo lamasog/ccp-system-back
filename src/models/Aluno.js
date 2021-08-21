@@ -5,7 +5,7 @@ class Aluno extends Model {
     super.init({
       codigo: DataTypes.INTEGER,
       name: DataTypes.STRING,
-      surname: DateTypes.STRING,
+      surname: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       cod_orientador: DataTypes.INTEGER,

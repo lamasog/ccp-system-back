@@ -1,11 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Aluno extends Model {
+class Orientador extends Model {
   static init(connection) {
     super.init({
       codigo: DataTypes.INTEGER,
       name: DataTypes.STRING,
-      surname: DateTypes.STRING,
+      surname: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       created_at: DataTypes.DATE,
