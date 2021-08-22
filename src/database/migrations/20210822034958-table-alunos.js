@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('orientadores', {
+    await queryInterface.createTable('alunos', {
 
       id: {
         type: Sequelize.INTEGER,
@@ -39,6 +39,19 @@ module.exports = {
         allowNull: false,
       },
 
+      cod_orientador: {
+        type: Sequelize.STRING,
+        references: { model: 'orientadors', key: 'codigo' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        allowNull: true,
+      },
+
+      curso: {
+        type:Sequelize.STRING,
+        allowNull: true,
+      },
+
       is_ccp: {
         type: Sequelize.TINYINT,
         allowNull: false,
@@ -54,6 +67,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('orientadores');
+    await queryInterface.dropTable('alunos');
   }
 };
