@@ -3,7 +3,9 @@ const routes = require('./routes');
 const cors = require('cors');
 
 require('./database');
-require('dotenv').config();
+require('dotenv').config({
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env" 
+});
 
 const app = express();
 
