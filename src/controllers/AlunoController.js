@@ -82,9 +82,6 @@ module.exports = {
   },
 
   async delete(req, res) {
-    if(!req.ccp)
-      return res.status(403).send({ msg: "Forbidden" });
-
     try {
       const aluno = await Aluno.findOne({
         where: req.id

@@ -28,6 +28,7 @@ routes.delete('/orientadores/delete', Authentication, OrientadorController.delet
 routes.post('/ccp/login', CcpControler.login);
 
 routes.post('/relatorios/create', Authentication, RelatorioController.create);
-// routes.get('/relatorios/list', Authentication, RelatorioController.list);
+routes.get('/relatorios/list', Authentication, RelatorioController.read);
+routes.get('/relatorios/listAll', Authentication, RelatorioController.readAll);
 
 module.exports = routes;

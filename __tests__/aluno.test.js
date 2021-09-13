@@ -46,12 +46,6 @@ describe("Testing routes for alunos", () => {
     expect(response.status).toBe(404);
   });
 
-  // it("should read Alunos from the database", async () => {
-  //   const response = await request(app).get("/alunos/list");
-
-    
-  // });
-
   it("should fail to read Alunos from the database", async () => {
     const response = await request(app).get("/alunos/list");
 

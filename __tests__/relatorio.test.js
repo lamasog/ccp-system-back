@@ -12,6 +12,14 @@ describe("Testing routes for Relatorios", () => {
   //   expect(response.status).toBe(200);
   // });
 
+  it("should fail to create a new Relatorio into the database", async () => {
+    const response = await request(app).post("/relatorios/create").send({
+      cod_aluno: "123123",
+    });
+
+    expect(response.status).toBe(401);
+  });
+
   afterAll(async () => {
     await database.sequelize.close()
   })

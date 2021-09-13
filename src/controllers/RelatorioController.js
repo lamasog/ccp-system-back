@@ -1,8 +1,8 @@
 const Relatorio = require('../models/Relatorio');
 const Aluno = require('../models/Aluno');
 
-const fs = require('fs');
 const { hasNull } = require('../utils/hasNull');
+const { writeFile, appendFile } = require('../utils/file');
 
 module.exports = {
 
@@ -16,23 +16,84 @@ module.exports = {
     const { cod_aluno } = req.body;
     
     try {
-      const aluno = await Aluno.findAll({
+      const aluno = await Aluno.findOne({
         where: { codigo: cod_aluno }
       });
 
       if(aluno.length === 0)
         return res.status(404).send({ msg: "Not found" });
 
+      const data = {
+        codigo: aluno.codigo,
+        name: aluno.name,
+        surname: aluno.surname,
+        email: aluno.email
+      };
+
       const filename = `${cod_aluno}.json`;
+        
+      writeFile(data, filename);
+      // appendFile(data, filename);
 
       const result = await Relatorio.create({ cod_aluno, filename });
       return res.status(200).send({ result });
-      
+
     } catch(error) {
       console.log(error);
       return res.status(500).send({ msg: "Internal server error" });
     }
   },
+
+  async read(req, res) {
+    try {
+      const aluno = await Aluno.findOne({ 
+        where: req.id
+      });
+
+      if(!aluno)
+        return res.status(404).send({ msg: "Not found" });
+      
+      const relatorios = await Relatorio.findAll({ 
+        where: { 
+          cod_aluno: aluno.codigo
+        } 
+      });
+
+      return res.status(200).send(relatorios);
+
+    } catch(error) {
+      console.log(error);
+      return res.status(500).send({ msg: "Internal server error" });
+    }
+  },
+
+  async readAll(req, res) {
+    if(!req.ccp)
+      return res.status(403).send({ mgs: 'Forbidden' });
+
+    try {
+      const relatorios = await Relatorio.findAll();
+      return res.status(200).send(relatorios);    
+    
+    } catch(error) {
+      console.log(error);
+      return res.status(500).send({ msg: "Internal server error" });
+    }
+  },
+
+  async update(req, res) {
+    try {
+      const relatorio = await Relatorio.findOne({ 
+        where: req.id
+      });
+
+      if(!aluno)
+        return res.status(404).send({ msg: "Not found" });
+
+    } catch(error) {
+
+    }
+  }
 
   // async create(req, res) {
   //   try {
