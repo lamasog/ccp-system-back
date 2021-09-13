@@ -31,8 +31,8 @@ module.exports = {
   },
 
   async read(req, res) {
-    // if(!req.ccp)
-    //   return res.status(403).send({ mgs: 'Forbidden' });
+    if(!req.ccp)
+      return res.status(403).send({ mgs: 'Forbidden' });
 
     try {
       const alunos = await Aluno.findAll({
@@ -83,8 +83,8 @@ module.exports = {
   },
 
   async delete(req, res) {
-    // if(!req.ccp)
-    //   return res.status(403).send({ msg: "Forbidden" });
+    if(!req.ccp)
+      return res.status(403).send({ msg: "Forbidden" });
 
     try {
       const aluno = await Aluno.findOne({

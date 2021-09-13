@@ -19,8 +19,7 @@ class Aluno extends Model {
 
   static associate(models) {
     this.belongsTo(models.Orientador, { foreignKey: 'cod_orientador', as: 'orientador' });
-    this.hasMany(models.Relatorio, { foreignKey: 'cod_aluno', as: 'relatorios' });
-}
+  }
 }
 
 module.exports = Aluno; 
