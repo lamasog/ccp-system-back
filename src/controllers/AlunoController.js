@@ -51,7 +51,6 @@ module.exports = {
   },
 
   async update(req, res) {
-
     try {
       const aluno = await Aluno.findOne({ 
         where: req.id

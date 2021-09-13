@@ -9,5 +9,6 @@ module.exports = {
   define: {
     underscored: true,
     timestamps: false,
+    logging: false,
   }
 }
