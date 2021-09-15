@@ -10,7 +10,9 @@ describe("Testing routes for alunos", () => {
       name: "Geovana",
       surname: "Lamas",
       email: "geovana@test.com",
-      password: "123"
+      password: "123",
+      cod_orientador: "",
+      curso: "mestrado"
     });
 
     expect(response.status).toBe(200);
@@ -22,7 +24,9 @@ describe("Testing routes for alunos", () => {
       name: "",
       surname: "",
       email: "",
-      password: ""
+      password: "",
+      cod_orientador: "",
+      curso: ""
     });
 
     expect(response.status).toBe(400);
