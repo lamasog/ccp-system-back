@@ -83,11 +83,16 @@ module.exports = {
 
   async delete(req, res) {
     if(!req.ccp)
-      return res.status(403).send({ msg: "Forbidden" });
+      return res.status(403).send({ msg: "Forbidden" })
+    
+    if(hasNull(req.body, ['cod_orientador']))
+      return res.status(400).send({ msg: "Missing required data" });
+
+    const { cod_orientador } = req.body;
 
     try {
       const orientador = await Orientador.findOne({
-        where: req.id
+        codigo: cod_orientador
       });
 
       if(!orientador)

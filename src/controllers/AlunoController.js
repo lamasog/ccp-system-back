@@ -126,9 +126,17 @@ module.exports = {
   },
 
   async delete(req, res) {
+    if(!req.ccp)
+      return res.status(403).send({ msg: "Forbidden" })
+    
+    if(hasNull(req.body, ['cod_aluno']))
+      return res.status(400).send({ msg: "Missing required data" });
+
+    const { cod_aluno } = req.body;
+
     try {
       const aluno = await Aluno.findOne({
-        where: req.id
+        codigo: cod_aluno
       });
 
       if(!aluno)
