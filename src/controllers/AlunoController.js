@@ -1,4 +1,5 @@
 const Aluno = require('../models/Aluno');
+const Orientador = require('../models/Orientador');
 
 const { hasNull } = require('../utils/hasNull');
 const { generateHash, generateToken, validPassword } = require('../utils/auth');
@@ -6,10 +7,10 @@ const { generateHash, generateToken, validPassword } = require('../utils/auth');
 module.exports = {
 
   async create(req, res) {
-    if(hasNull(req.body, ['codigo', 'name', 'surname', 'email', 'password']))
+    if(hasNull(req.body, ['codigo', 'name', 'surname', 'email', 'password', 'cod_orientador', 'curso']))
       return res.status(400).send({ msg: "Missing required data"});
 
-    const { codigo, name, surname, email, password } = req.body;
+    const { codigo, name, surname, email, password, cod_orientador, curso } = req.body;
 
     try {
       const aluno = await Aluno.findAll({
@@ -18,11 +19,32 @@ module.exports = {
 
       if(aluno.length > 0)
         return res.status(400).send({ msg: "Duplicate entries in the database" });
+      
+      const orientador = await Orientador.findOne({
+        where: { codigo: cod_orientador },
+        attributes: { exclude: ['password', 'is_ccp', 'created_at'] }
+      });
 
-      const result = await Aluno.create({ codigo, name, surname, email, password: await generateHash(password) });
+      if(!orientador)
+        return res.status(404).send({ msg: "Not found" });
+
+      const result = await Aluno.create({ 
+        codigo, 
+        name, 
+        surname, 
+        email, 
+        cod_orientador, 
+        curso, 
+        password: await generateHash(password)
+      });
+
       result.password = undefined;
 
-      return res.status(200).send({ aluno: result, token: generateToken({ id: result.id, ccp: result.is_ccp }) });
+      return res.status(200).send({ 
+        aluno: result, 
+        orientador: orientador, 
+        token: generateToken({ id: result.id, ccp: result.is_ccp }) 
+      });
 
     } catch(error) {
       console.log(error);
@@ -30,7 +52,29 @@ module.exports = {
     }
   },
 
-  async read(req, res) {
+  async readOrientador(req, res) {
+    const orientador = await Orientador.findOne({
+      where: req.id
+    })
+
+    try {
+      const alunos = await Aluno.findAll({
+        where: { cod_orientador: orientador.codigo },
+        attributes: { exclude: ['password'] }
+      });
+
+      if(alunos.length === 0)
+        return res.status(404).send({ msg: 'Not found'});
+
+      return res.status(200).send(alunos);
+
+    } catch(error) {
+      console.log(error);
+      return res.status(500).send({ msg: "Internal server error" });
+    }
+  },
+
+  async readCcp(req, res) {
     if(!req.ccp)
       return res.status(403).send({ mgs: 'Forbidden' });
 

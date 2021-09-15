@@ -51,7 +51,6 @@ module.exports = {
   },
 
   async update(req, res) {
-
     try {
       const orientador = await Orientador.findOne({ 
         where: req.id
