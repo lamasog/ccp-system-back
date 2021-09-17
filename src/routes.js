@@ -9,7 +9,7 @@ const RelatorioController = require('../src/controllers/RelatorioController')
 const Authentication = require('../src/middlewares/auth');
 
 routes.get('/', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   return res.status(200).json('Rota inicial');
 });
 
