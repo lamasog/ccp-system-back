@@ -175,7 +175,8 @@ module.exports = {
         'resp1', 'resp2', 'resp3', 'resp4', 'resp5', 
         'resp6', 'resp7', 'resp8', 'resp9', 'resp10', 
         'resp11', 'resp12', 'resp13', 'resp14', 'resp15', 
-        'resp16', 'resp17', 'resp18', 'resp19', 'resp20'
+        'resp16', 'resp17', 'resp18', 'resp19', 'resp20',
+        'resp21', 'resp22', 'resp23', 'resp24', 'resp25', 'resp26'
       ]
     ))
       return res.status(400).send({ msg: "Missing required data"});
